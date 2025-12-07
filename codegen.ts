@@ -7,10 +7,12 @@ loadEnvConfig(projectDir);
 const config: CodegenConfig = {
   overwrite: true,
   schema: {
-    [`${process.env.NEXT_PUBLIC_WORDPRESS_API_URL || 'https://api.example.com'}/graphql`]: {      headers: {
-        "User-Agent": "Codegen",
+    // TODO: Set NEXT_PUBLIC_WORDPRESS_API_URL in your .env.local or Vercel environment variables
+    // Example: NEXT_PUBLIC_WORDPRESS_API_URL=https://your-wordpress-site.com
+    ...(process.env.NEXT_PUBLIC_WORDPRESS_API_URL ? {
+      [`${process.env.NEXT_PUBLIC_WORDPRESS_API_URL}/graphql`]: { headers: {        "User-Agent": "Codegen",
       },
-    },
+    }, : {})
   },
   generates: {
     "src/gql/": {
